@@ -1,11 +1,11 @@
 
 // This script is injected into the page when the extension is enabled
-window.addEventListener('load', function() {
-    setTimeout(function() {
+window.addEventListener('load', function () {
+    setTimeout(function () {
 
         // Find the toolbar element
-        const toolbar = document.querySelector('.toolbar-3_r2xA');
-    
+        let toolbar = document.querySelector('.toolbar-3_r2xA');
+
         // Create the icon element
         const icon = document.createElement('div');
 
@@ -19,7 +19,7 @@ window.addEventListener('load', function() {
         icon.setAttribute('aria-expanded', 'false');
         icon.setAttribute('tabindex', '0');
 
-        // Add a click event listener to toggle the sidebar width
+        // Add a click event listener to the icon
         icon.addEventListener('click', () => {
             const sidebar = document.querySelector('.sidebar-1tnWFu');
             sidebar.style.width = sidebar.style.width === '1px' ? '240px' : '1px';
@@ -30,21 +30,15 @@ window.addEventListener('load', function() {
 
         console.log('Content script running...');
 
-        // Observe the toolbar for changes and re-add the icon if it's removed
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList' && !mutation.addedNodes.contains(icon)) {
-                    toolbar.insertBefore(icon, toolbar.firstChild);
-                }
-            });
-        });
-        observer.observe(toolbar, { childList: true });
-
-        // Listen for changes in the URL and re-add the icon if necessary
-        chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-            if (changeInfo.url && changeInfo.url.includes('discord.com/channels/')) {
+        // Periodically check for the existence of the icon and re-add it if necessary
+        setInterval(function () {
+            // Re-find the toolbar element
+            toolbar = document.querySelector('.toolbar-3_r2xA');
+            // We can just re-use the icon element, because it's created programmatically
+            if (!toolbar.contains(icon)) {
                 toolbar.insertBefore(icon, toolbar.firstChild);
             }
-        });
+        }, 1000);
+
     }, 1000); // Wait for half a second to make sure the DOM is loaded
 });
