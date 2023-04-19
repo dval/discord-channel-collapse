@@ -7,3 +7,4 @@ It's just one simple script that adds an SVG icon, and provides a click listener
 
 Enjoy more screen space on narrow viewports, or just hide the list until you need it.
 
+Requires developer mode to be enabled.
