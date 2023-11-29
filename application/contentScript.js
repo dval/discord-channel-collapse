@@ -28,7 +28,7 @@ window.addEventListener('load', function () {
         // Add the icon to the lefternmost position of the toolbar
         toolbar.insertBefore(icon, toolbar.firstChild);
 
-        console.log('Content script running...');
+        console.log('discord-channel-collapse active...');
 
         // Periodically check for the existence of the icon and re-add it if necessary
         setInterval(function () {
